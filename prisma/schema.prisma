@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:Varchar2@localhost:5432/CarFixGuru-DB?schema=public"
+}
+
+//Models
+model Engine {
+  id String @id @default(cuid())
+  code String
+  configuration String
+  fuelType fuelType
+  displacement Decimal
+  mark String
+  power Int
+  cars Car[]
+  compatibleParts Part[] 
+}
+
+model Transmission {
+  id String @id @default(cuid())
+  make String
+  model String
+  type String
+  numOfGears Int
+  cars Car[]
+  compatibleParts Part[]
+}
+
+model Car {
+  id String @id @default(cuid())
+  brand String
+  model String
+  generation String
+  category carCategory
+  yearFrom Int
+  yearTo Int
+  engines Engine[]
+  transmissions Transmission[]
+  compatibleParts Part[]
+  articles Article[]
+}
+
+model Part {
+  id String @id @default(cuid())
+  name String
+  manufacturer String
+  category String
+  subCategory String
+  refernceNumber String
+  imgURLs String[]
+  compatibleCars Car[]
+  compatibleEngines Engine[]
+  compatibleTransmissions Transmission[]
+  price Decimal
+  quantity Int
+}
+
+model Article {
+  id String @id @default(cuid())
+  carId String
+  car Car @relation(fields: [carId], references: [id])
+  headline String
+  paragraphs String[]
+  imgURLs String[]
+  tools String
+  parts String 
+  tags String
+}
+
+model PartCategory {
+  id String @id @default(cuid())
+  name String @unique
+  imgURL String
+  subCategories PartSubCategory[]
+}
+
+model PartSubCategory {
+  id String @id @default(cuid())
+  subCategory String
+  imgURL String
+  partCategory PartCategory @relation(fields: [partCategoryId], references: [id])
+  partCategoryId String
+}
+
+model Cart {
+  id      String      @id @default(cuid()) //@map("cart_id")
+  user    User        @relation(fields: [userId], references: [id])
+  userId  String
+  cartItems CartItem[]
+}
+
+model CartItem {
+  id       String      @id @default(cuid()) //@map("cart_item_id")
+  cart     Cart        @relation(fields: [cartId], references: [id])
+  cartId   String
+  partId   String
+  quantity Int
+}
+
+model User {
+  id String @id @default(cuid())
+  email String @unique
+  password String
+  fname String
+  lname String
+  address String
+  cityAndState String
+  phoneNumber String
+  carts Cart[]
+}
+
+//Enums
+enum transmissionType {
+  Manual
+  Automatic
+  SemiAutomatic
+}
+
+enum carCategory {
+  Saloon
+  Estate
+  Suv
+  Off_Road
+  Coupe
+  Convertible
+  Sports_car
+  Hatchback
+  Mini_Van
+}
+
+enum fuelType {
+  Diesel
+  Petrol
+  Petrol_Electric
+  Diesel_Electric
+}
