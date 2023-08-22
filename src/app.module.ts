@@ -17,9 +17,10 @@ import { UsersService } from './users/users.service';
 import { UsersController } from './users/users.controller';
 import { PartCategoryController } from './part-category/part-category.controller';
 import { PartCategoryService } from './part-category/part-category.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [],
+  imports: [AuthModule],
   controllers: [AppController, CarsController, PartsController, EnginesController, TransmissionsController, ArticlesController, CartsController, UsersController, PartCategoryController],
   providers: [AppService, CarsService, PartsService, EnginesService, TransmissionsService, ArticlesService, CartsService, UsersService, PartCategoryService],
 })
