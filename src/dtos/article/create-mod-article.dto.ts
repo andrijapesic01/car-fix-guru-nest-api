@@ -12,8 +12,11 @@ export class CreateModArticleDto {
     headline: string;
 
     @IsString()
-    paragraphs: string[];
-
+    description: string;
+    
+    @IsString()
+    text: string;
+    
     @IsString()
     imgURLs: string[];
 
@@ -25,4 +28,7 @@ export class CreateModArticleDto {
 
     @IsString()
     tags: string;
+
+    @IsString()
+    userId: string;
 }

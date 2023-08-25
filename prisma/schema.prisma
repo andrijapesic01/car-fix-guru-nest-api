@@ -67,11 +67,13 @@ model Article {
   carId String
   car Car @relation(fields: [carId], references: [id])
   headline String
-  paragraphs String[]
+  description String
+  text String
   imgURLs String[]
   tools String
   parts String 
-  tags String
+  userId String
+  user User @relation(fields: [userId], references: [id])
 }
 
 model PartCategory {
@@ -113,6 +115,8 @@ model User {
   address String
   cityAndState String
   phoneNumber String
+  role String
+  articles Article[]
   carts Cart[]
 }
 
@@ -141,3 +145,4 @@ enum fuelType {
   Petrol_Electric
   Diesel_Electric
 }
+

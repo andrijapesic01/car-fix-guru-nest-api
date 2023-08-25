@@ -2,12 +2,15 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger';
 import { PartsService } from './parts.service';
 import { CreateModPartDto } from 'src/dtos/part/create-mod-part.dto';
+import { Public } from 'src/auth/decorators/public.decorator'
+
 
 @Controller('parts')
 @ApiTags('parts')
 export class PartsController {
     constructor(private partsService: PartsService) {}
   
+    @Public()
     @Get()
     public getParts() {
       return this.partsService.getParts();

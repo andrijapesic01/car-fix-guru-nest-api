@@ -6,6 +6,8 @@ const prisma = new PrismaClient();
 
 @Injectable()
 export class ArticlesService {
+
+    
     public getArticles() : Promise<Article[]> {
         return prisma.article.findMany();
     }

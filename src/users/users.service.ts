@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaClient, User } from '@prisma/client';
 import { CreateUserDto } from 'src/dtos/user/create-user.dto';
-import * as bcrypt from 'bcrypt';
 import { HashingService } from 'src/auth/hashing/hashing.service';
 
 const prisma = new PrismaClient();
@@ -25,12 +24,13 @@ export class UsersService {
 
   public async createUser(createUserDto: CreateUserDto): Promise<User | BadRequestException> {
 
-    const user = prisma.user.findUnique({ where: { email: createUserDto.email}}); 
-    //const user = this.findUserByEmail(createUserDto.email);
-    /* console.log(user); 
-    if(user != null)
-      return new BadRequestException('User already exist') */;
+    const user = prisma.user.findFirst({ where: { email: createUserDto.email}});
 
+    //const user = this.findUserByEmail(createUserDto.email);
+    //console.log(user); 
+    /* if(user != null)
+      return new BadRequestException('User already exist');
+ */
     //const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const hashedPassword = await this.hashingService.hash(createUserDto.password);
 
@@ -43,6 +43,7 @@ export class UsersService {
         address: createUserDto.address,
         cityAndState: createUserDto.cityAndState,
         phoneNumber: createUserDto.phoneNumber,
+        role: 'user'
       },
     });
   }
