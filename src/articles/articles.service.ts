@@ -18,18 +18,28 @@ export class ArticlesService {
         }})
     }
 
-    public async addArticle(articleData: CreateModArticleDto) : Promise<Article | BadRequestException> {
+    public async addArticle(articleData: CreateModArticleDto): Promise<Article> {
         try {
-            const article = prisma.article.create({
-                data: articleData
+            const article = await prisma.article.create({
+                data: {
+                    headline: articleData.headline,
+                    description: articleData.description,
+                    text: articleData.text,
+                    imgURLs: articleData.imgURLs,
+                    tools: articleData.tools,
+                    parts: articleData.parts,
+                    carId: articleData.carId,
+                    userId: "clltr3vk00002va4wpqyki1bx"
+                }
             });
             return article;
-        } catch(error) {
-            throw new BadRequestException("Error creating part!");
+        } catch (error) {
+            console.log(error);
+            throw new BadRequestException('Error creating article!');
         }
     }
 
-    public async changeArticle(id: string, data: CreateModArticleDto) : Promise<Article | BadRequestException> {
+    public async changeArticle(id: string, data: CreateModArticleDto) : Promise<Article> {
         try {
             const article = prisma.article.update({
                 where: {id: id},

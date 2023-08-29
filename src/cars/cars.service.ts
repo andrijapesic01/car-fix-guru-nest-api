@@ -24,7 +24,7 @@ export class CarsService {
     });
   }
 
-  public async createCar( carData: CreateModCarDto ) : Promise<Car | BadRequestException> {
+  public async createCar( carData: CreateModCarDto ) : Promise<Car> {
     const car = await prisma.car.create({
       data: {
         brand: carData.brand,
@@ -46,7 +46,7 @@ export class CarsService {
     return car;
   }
 
-  public async changeCar(id: string, carData: CreateModCarDto ): Promise<Car | BadRequestException> {
+  public async changeCar(id: string, carData: CreateModCarDto ): Promise<Car> {
     try {
       const car = await prisma.car.update({
         where: { id: id },
@@ -70,11 +70,11 @@ export class CarsService {
 
       return car;
     } catch (error) {
-      return new BadRequestException('Car does not exist');
+      throw new BadRequestException('Car does not exist');
     }
   }
 
-  public async deleteCar(id: string): Promise<Car | NotFoundException> {
+  public async deleteCar(id: string): Promise<Car> {
     try {
       const car = await prisma.car.delete({
         where: { id: id },

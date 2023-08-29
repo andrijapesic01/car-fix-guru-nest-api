@@ -40,7 +40,6 @@ export class CreateModPartDto {
     @IsNotEmpty()
     price: Decimal;
 
-    @IsInt()
     @IsNotEmpty()
     quantity: number;
 }

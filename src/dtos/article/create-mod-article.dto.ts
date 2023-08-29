@@ -4,7 +4,6 @@ import { IsString, IsNotEmpty } from 'class-validator';
 export class CreateModArticleDto {
 
     @IsString()
-    @IsNotEmpty()
     carId: string;
 
     @IsString()
@@ -25,9 +24,6 @@ export class CreateModArticleDto {
 
     @IsString()
     parts: string;
-
-    @IsString()
-    tags: string;
 
     @IsString()
     userId: string;

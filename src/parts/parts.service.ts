@@ -25,7 +25,7 @@ export class PartsService {
                     manufacturer: partData.manufacturer,
                     category: partData.category,
                     subCategory: partData.subCategory,
-                    refernceNumber: partData.referenceNumber,
+                    referenceNumber: partData.referenceNumber,
                     imgURLs: partData.imgURLs,
                     compatibleCars: { connect: partData.carIDs.map(carId => ({id: carId}))},
                     compatibleEngines: { connect: partData.engineIDs.map(engineId => ({id: engineId}))},
@@ -34,6 +34,7 @@ export class PartsService {
                     quantity: partData.quantity
                 }
             });
+            console.log(part);
             return part;
         } catch(error) {
             throw new BadRequestException("Error creating part!");
@@ -49,7 +50,7 @@ export class PartsService {
                     manufacturer: partData.manufacturer,
                     category: partData.category,
                     subCategory: partData.subCategory,
-                    refernceNumber: partData.referenceNumber,
+                    referenceNumber: partData.referenceNumber,
                     imgURLs: partData.imgURLs,
                     compatibleCars: { connect: partData.carIDs.map(carId => ({id: carId}))},
                     compatibleEngines: { connect: partData.engineIDs.map(engineId => ({id: engineId}))},

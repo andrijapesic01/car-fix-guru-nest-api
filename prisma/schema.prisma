@@ -53,7 +53,7 @@ model Part {
   manufacturer String
   category String
   subCategory String
-  refernceNumber String
+  referenceNumber String
   imgURLs String[]
   compatibleCars Car[]
   compatibleEngines Engine[]
