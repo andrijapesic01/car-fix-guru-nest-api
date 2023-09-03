@@ -27,4 +27,7 @@ export class CreateModArticleDto {
 
     @IsString()
     userId: string;
+
+    @IsString()
+    engineId: string;
 }

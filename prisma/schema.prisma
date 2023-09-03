@@ -20,29 +20,31 @@ model Engine {
   mark String
   power Int
   cars Car[]
-  compatibleParts Part[] 
+  compatibleParts Part[]
+  articles Article[] 
 }
 
-model Transmission {
-  id String @id @default(cuid())
-  make String
-  model String
-  type String
-  numOfGears Int
-  cars Car[]
-  compatibleParts Part[]
-}
+
+//model Transmission {
+//  id String @id @default(cuid())
+//  make String
+//  model String
+//  type String
+//  numOfGears Int
+//  cars Car[]
+//  compatibleParts Part[]
+//}
 
 model Car {
   id String @id @default(cuid())
   brand String
   model String
   generation String
-  category carCategory
+  category String //carCategory
   yearFrom Int
   yearTo Int
   engines Engine[]
-  transmissions Transmission[]
+  //transmissions Transmission[]
   compatibleParts Part[]
   articles Article[]
 }
@@ -57,7 +59,7 @@ model Part {
   imgURLs String[]
   compatibleCars Car[]
   compatibleEngines Engine[]
-  compatibleTransmissions Transmission[]
+  //compatibleTransmissions Transmission[]
   price Decimal
   quantity Int
 }
@@ -74,6 +76,8 @@ model Article {
   parts String 
   userId String
   user User @relation(fields: [userId], references: [id])
+  engineId String
+  engine Engine @relation(fields: [engineId], references: [id])
 }
 
 model PartCategory {

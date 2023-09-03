@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaClient, Transmission } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { CreateModTransmissionDto } from 'src/dtos/transmission/create-modify-transmission.dto';
 
 const prisma = new PrismaClient();
@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 @Injectable()
 export class TransmissionsService {
 
-    public getTransmissions() : Promise<Transmission[] | null> {
+    /* public getTransmissions() : Promise<Transmission[] | null> {
         return prisma.transmission.findMany();
     }
     
@@ -56,6 +56,6 @@ export class TransmissionsService {
         } catch (error) {
           throw new NotFoundException(`Transmission with ID ${id} not found`);
         }
-    }
+    } */
 
 }

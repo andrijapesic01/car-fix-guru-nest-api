@@ -9,7 +9,6 @@ export class EnginesService {
 
     public async getEngines() : Promise<Engine[] | null> {
         const engines = await prisma.engine.findMany();
-        console.log(engines);
         return engines;
     }
 
@@ -21,7 +20,6 @@ export class EnginesService {
 
     public async addEngine(data: CreateEngineDto) : Promise<Engine | null> {
         try {
-            console.log(data);
             const newEngine = await prisma.engine.create({
               data: data
             });

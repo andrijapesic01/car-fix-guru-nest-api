@@ -21,7 +21,7 @@ export class ArticlesService {
     public async addArticle(articleData: CreateModArticleDto): Promise<Article> {
         try {
             const article = await prisma.article.create({
-                data: {
+                /* data: {
                     headline: articleData.headline,
                     description: articleData.description,
                     text: articleData.text,
@@ -30,7 +30,8 @@ export class ArticlesService {
                     parts: articleData.parts,
                     carId: articleData.carId,
                     userId: "clltr3vk00002va4wpqyki1bx"
-                }
+                } */
+                data: articleData
             });
             return article;
         } catch (error) {

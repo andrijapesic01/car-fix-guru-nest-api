@@ -29,14 +29,13 @@ export class PartsService {
                     imgURLs: partData.imgURLs,
                     compatibleCars: { connect: partData.carIDs.map(carId => ({id: carId}))},
                     compatibleEngines: { connect: partData.engineIDs.map(engineId => ({id: engineId}))},
-                    compatibleTransmissions: { connect: partData.transmissionIDs.map(transId => ({id: transId}))},
                     price: partData.price,
                     quantity: partData.quantity
                 }
             });
-            console.log(part);
             return part;
         } catch(error) {
+            console.log(error);
             throw new BadRequestException("Error creating part!");
         }
     }
@@ -54,7 +53,7 @@ export class PartsService {
                     imgURLs: partData.imgURLs,
                     compatibleCars: { connect: partData.carIDs.map(carId => ({id: carId}))},
                     compatibleEngines: { connect: partData.engineIDs.map(engineId => ({id: engineId}))},
-                    compatibleTransmissions: { connect: partData.transmissionIDs.map(transId => ({id: transId}))},
+                    //compatibleTransmissions: { connect: partData.transmissionIDs.map(transId => ({id: transId}))},
                     price: partData.price,
                     quantity: partData.quantity
                 }

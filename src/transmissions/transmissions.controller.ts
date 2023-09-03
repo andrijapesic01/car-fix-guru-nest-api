@@ -8,7 +8,7 @@ import { CreateModTransmissionDto } from 'src/dtos/transmission/create-modify-tr
 export class TransmissionsController {
     constructor(private transmissionsService: TransmissionsService) {}
   
-    @Get()
+   /*  @Get()
     public getTransmissions() {
       return this.transmissionsService.getTransmissions();
     }
@@ -31,7 +31,7 @@ export class TransmissionsController {
     @Delete('deleteTransmission/:id')
     public deleteTransmission(@Param('id') id: string) {
       return this.transmissionsService.deleteTransmission(id);
-    }
+    } */
   
   }
   

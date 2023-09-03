@@ -1,4 +1,4 @@
-import { carCategory } from "@prisma/client";
+//import { carCategory } from "@prisma/client";
 import { IsNumber, IsString } from "class-validator";
 
 export class CreateModCarDto {
@@ -13,7 +13,7 @@ export class CreateModCarDto {
     generation: string;
     
     @IsString()
-    category: carCategory;
+    category: string;
     
     @IsNumber()
     yearFrom: number;
@@ -23,8 +23,4 @@ export class CreateModCarDto {
 
     @IsString()
     engineIDs: string[];
-    
-    @IsString()
-    transmissionIDs: string[];
-
 }

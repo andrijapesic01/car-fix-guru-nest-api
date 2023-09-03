@@ -12,8 +12,19 @@ const prisma = new PrismaClient();
 
 @Injectable()
 export class CarsService {
-  public getCars(): Promise<Car[]> {
-    return prisma.car.findMany();
+  public async getCars(): Promise<Car[]> {
+    const cars =  await prisma.car.findMany({ include: {
+      engines: {
+        select: { id: true }
+      }
+    }});
+
+    const ret = cars.map((car) => ({
+      ...car,
+      engineIDs: car.engines.map((engine) => engine.id),
+      engines: undefined,
+    }));
+    return ret;
   }
 
   public async getCar(id: string): Promise<Car | null> {
@@ -25,25 +36,26 @@ export class CarsService {
   }
 
   public async createCar( carData: CreateModCarDto ) : Promise<Car> {
-    const car = await prisma.car.create({
-      data: {
-        brand: carData.brand,
-        model: carData.model,
-        generation: carData.generation,
-        category: carData.category,
-        yearFrom: carData.yearFrom,
-        yearTo: carData.yearTo,
-        engines: {
-          connect: carData.engineIDs.map((engineId) => ({ id: engineId })),
+    try{
+      const car = await prisma.car.create({
+        data: {
+          brand: carData.brand,
+          model: carData.model,
+          generation: carData.generation,
+          category: carData.category,
+          yearFrom: carData.yearFrom,
+          yearTo: carData.yearTo,
+          engines: {
+            connect: carData.engineIDs.map((engineId) => ({ id: engineId })),
+          }
         },
-        transmissions: {
-          connect: carData.transmissionIDs.map((transmissionId) => ({
-            id: transmissionId,
-          })),
-        },
-      },
-    });
-    return car;
+      });
+      return car;
+    }
+    catch(error) {
+      console.log(error);
+    }
+    
   }
 
   public async changeCar(id: string, carData: CreateModCarDto ): Promise<Car> {
@@ -59,12 +71,7 @@ export class CarsService {
           yearTo: carData.yearTo,
           engines: {
             connect: carData.engineIDs.map((engineId) => ({ id: engineId })),
-          },
-          transmissions: {
-            connect: carData.transmissionIDs.map((transmissionId) => ({
-              id: transmissionId,
-            })),
-          },
+          }
         },
       });
 
