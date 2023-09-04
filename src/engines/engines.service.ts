@@ -37,9 +37,7 @@ export class EnginesService {
                 where: { id: id },
                 data: data,
             });
-
-            return engine;
-            
+            return engine;  
         }
         catch(error) {
             return new BadRequestException('Engine does not exist');

@@ -1,4 +1,3 @@
-//import { carCategory } from "@prisma/client";
 import { IsNumber, IsString } from "class-validator";
 
 export class CreateModCarDto {
