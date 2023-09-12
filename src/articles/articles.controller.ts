@@ -5,21 +5,28 @@ import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator'
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
-
+@UseGuards(JwtAuthGuard)
 @ApiTags('articles')
 @Controller('articles')
 export class ArticlesController {
   constructor(private articlesService: ArticlesService) {}
 
-  /* @UseGuards(JwtAuthGuard) */
+  @Public()
   @Get()
   public getArticles() {
     return this.articlesService.getArticles();
   }
 
+  @Public()
   @Get(':id')
   public getArticle(@Param('id') id: string) {
     return this.articlesService.getArticle(id);
+  }
+
+  //@Public()
+  @Get('stringSearch/:searchString')
+  public stringSearch(@Param('searchString') searchString: string) {
+    return this.articlesService.articleStringSearch(searchString);
   }
 
   @Post('addArticle')

@@ -55,4 +55,16 @@ export class ArticlesService {
     public deleteArticle(id: string) {
         return prisma.article.delete({where: { id: id}});
     }
+
+    public articleStringSearch(searchString: string) : Promise<Article[]> {
+        return prisma.article.findMany({
+            where: {
+                OR: [
+                    { headline: { contains: searchString } },
+                    { description: { contains: searchString } },
+                    { text: { contains: searchString } },
+                ],
+              },
+        })
+    }
 }

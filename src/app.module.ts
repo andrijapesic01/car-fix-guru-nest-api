@@ -11,17 +11,19 @@ import { TransmissionsController } from './transmissions/transmissions.controlle
 import { TransmissionsService } from './transmissions/transmissions.service';
 import { ArticlesService } from './articles/articles.service';
 import { ArticlesController } from './articles/articles.controller';
-import { CartsController } from './carts/carts.controller';
-import { CartsService } from './carts/carts.service';
+//import { CartsController } from './carts/carts.controller';
+//import { CartsService } from './carts/carts.service';
 import { UsersService } from './users/users.service';
 import { UsersController } from './users/users.controller';
 import { PartCategoryController } from './part-category/part-category.controller';
 import { PartCategoryService } from './part-category/part-category.service';
 import { AuthModule } from './auth/auth.module';
+import { OrderController } from './order/order.controller';
+import { OrderService } from './order/order.service';
 
 @Module({
   imports: [AuthModule],
-  controllers: [AppController, CarsController, PartsController, EnginesController, TransmissionsController, ArticlesController, CartsController, UsersController, PartCategoryController],
-  providers: [AppService, CarsService, PartsService, EnginesService, TransmissionsService, ArticlesService, CartsService, UsersService, PartCategoryService],
+  controllers: [AppController, CarsController, PartsController, EnginesController, TransmissionsController, ArticlesController, UsersController, PartCategoryController, OrderController],
+  providers: [AppService, CarsService, PartsService, EnginesService, TransmissionsService, ArticlesService, UsersService, PartCategoryService, OrderService],
 })
 export class AppModule {}

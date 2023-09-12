@@ -12,18 +12,18 @@ datasource db {
 
 //Models
 model Engine {
-  id String @id @default(cuid())
-  code String
-  configuration String
-  fuelType fuelType
-  displacement Decimal
-  mark String
-  power Int
-  cars Car[]
+  id              String    @id @default(cuid())
+  code            String
+  configuration   String
+  fuelType        fuelType
+  displacement    Decimal
+  mark            String
+  power           Int
+  torque          Int
+  cars            Car[]
   compatibleParts Part[]
-  articles Article[] 
+  articles        Article[]
 }
-
 
 //model Transmission {
 //  id String @id @default(cuid())
@@ -36,92 +36,110 @@ model Engine {
 //}
 
 model Car {
-  id String @id @default(cuid())
-  brand String
-  model String
-  generation String
-  category String //carCategory
-  yearFrom Int
-  yearTo Int
-  engines Engine[]
+  id              String    @id @default(cuid())
+  brand           String
+  model           String
+  generation      String
+  category        String //carCategory
+  yearFrom        Int
+  yearTo          Int
+  engines         Engine[]
   //transmissions Transmission[]
   compatibleParts Part[]
-  articles Article[]
+  articles        Article[]
 }
 
 model Part {
-  id String @id @default(cuid())
-  name String
-  manufacturer String
-  category String
-  subCategory String
-  referenceNumber String
-  imgURLs String[]
-  compatibleCars Car[]
+  id                String      @id @default(cuid())
+  name              String
+  manufacturer      String
+  category          String
+  subCategory       String
+  referenceNumber   String
+  imgURLs           String[]
+  compatibleCars    Car[]
   compatibleEngines Engine[]
   //compatibleTransmissions Transmission[]
-  price Decimal
-  quantity Int
+  price             Decimal
+  quantity          Int
+  OrderItem         OrderItem[]
 }
 
 model Article {
-  id String @id @default(cuid())
-  carId String
-  car Car @relation(fields: [carId], references: [id])
-  headline String
+  id          String   @id @default(cuid())
+  carId       String
+  car         Car      @relation(fields: [carId], references: [id])
+  headline    String
   description String
-  text String
-  imgURLs String[]
-  tools String
-  parts String 
-  userId String
-  user User @relation(fields: [userId], references: [id])
-  engineId String
-  engine Engine @relation(fields: [engineId], references: [id])
+  text        String
+  imgURLs     String[]
+  tools       String
+  parts       String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  engineId    String
+  engine      Engine   @relation(fields: [engineId], references: [id])
 }
 
 model PartCategory {
-  id String @id @default(cuid())
-  name String @unique
-  imgURL String
+  id            String            @id @default(cuid())
+  name          String            @unique
+  imgURL        String
   subCategories PartSubCategory[]
 }
 
 model PartSubCategory {
-  id String @id @default(cuid())
-  subCategory String
-  imgURL String
-  partCategory PartCategory @relation(fields: [partCategoryId], references: [id])
+  id             String       @id @default(cuid())
+  subCategory    String
+  imgURL         String
+  partCategory   PartCategory @relation(fields: [partCategoryId], references: [id])
   partCategoryId String
 }
 
-model Cart {
-  id      String      @id @default(cuid()) //@map("cart_id")
-  user    User        @relation(fields: [userId], references: [id])
-  userId  String
-  cartItems CartItem[]
-}
-
-model CartItem {
-  id       String      @id @default(cuid()) //@map("cart_item_id")
-  cart     Cart        @relation(fields: [cartId], references: [id])
-  cartId   String
-  partId   String
-  quantity Int
-}
+//model Cart {
+//  id      String      @id @default(cuid()) //@map("cart_id")
+//  user    User        @relation(fields: [userId], references: [id])
+//  userId  String
+//  cartItems CartItem[]
+//}
+//
+//model CartItem {
+//  id       String      @id @default(cuid()) //@map("cart_item_id")
+//  cart     Cart        @relation(fields: [cartId], references: [id])
+//  cartId   String
+//  partId   String
+//  quantity Int
+//}
 
 model User {
-  id String @id @default(cuid())
-  email String @unique
-  password String
-  fname String
-  lname String
-  address String
+  id           String    @id @default(cuid())
+  email        String    @unique
+  password     String
+  fname        String
+  lname        String
+  address      String
   cityAndState String
-  phoneNumber String
-  role String
-  articles Article[]
-  carts Cart[]
+  phoneNumber  String
+  role         String
+  articles     Article[]
+  orders       Order[]
+  //carts Cart[]
+}
+
+model OrderItem {
+  id              String @id @default(cuid())
+  part            Part   @relation(fields: [partId], references: [id])
+  partId          String
+  orderedQunatity Int
+  order           Order  @relation(fields: [orderId], references: [id])
+  orderId         String
+}
+
+model Order {
+  id     String      @id @default(cuid())
+  userId String
+  user   User        @relation(fields: [userId], references: [id])
+  items  OrderItem[]
 }
 
 //Enums
@@ -149,4 +167,3 @@ enum fuelType {
   Petrol_Electric
   Diesel_Electric
 }
-

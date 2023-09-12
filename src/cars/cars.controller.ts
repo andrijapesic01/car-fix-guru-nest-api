@@ -1,18 +1,23 @@
-import { Controller, Get, Param, Post, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Put, Delete, Body, UseGuards } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { CreateModCarDto } from 'src/dtos/car/create-mod-car.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Public } from 'src/auth/decorators/public.decorator';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('cars')
 @Controller('cars')
 export class CarsController {
   constructor(private carsService: CarsService) {}
 
+  @Public()
   @Get()
   public getCars() {
     return this.carsService.getCars();
   }
 
+  @Public()
   @Get(':id')
   public getCar(@Param('id') id: string) {
     return this.carsService.getCar(id);

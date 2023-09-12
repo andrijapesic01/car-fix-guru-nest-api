@@ -31,7 +31,7 @@ export class EnginesService {
         }
     }
 
-    public async changeEngine(id: string, data: CreateEngineDto) : Promise<Engine | BadRequestException> {
+    public async changeEngine(id: string, data: CreateEngineDto) : Promise<Engine> {
         try {
             const engine = await prisma.engine.update({
                 where: { id: id },
@@ -40,7 +40,7 @@ export class EnginesService {
             return engine;  
         }
         catch(error) {
-            return new BadRequestException('Engine does not exist');
+            throw new BadRequestException('Engine does not exist');
         }
     }
 

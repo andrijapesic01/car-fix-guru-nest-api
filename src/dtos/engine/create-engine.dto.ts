@@ -21,6 +21,9 @@ export class CreateEngineDto {
 
     @IsNumber()
     power: number;
+
+    @IsNumber()
+    torque: number;
 }
 
 
